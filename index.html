@@ -1,0 +1,1838 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>YouTube Home</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .header {
+            height: 56px;
+            width: 100%;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 16px;
+
+            background: white;
+            border-bottom: 1px solid #e5e5e5;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            z-index: 1000;
+        }
+
+
+        /* MENU */
+
+        .menu {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .menu:hover {
+            background: #f2f2f2;
+        }
+
+
+        .logo {
+            display: flex;
+            align-items: center;
+            color: black;
+            text-decoration: none;
+        }
+
+        .logo img{
+            width: 50px;
+            height: 45px;
+        }
+
+        .logo h1{font-size: 28px;}
+
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .search-area {
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+
+            margin-left: 80px;
+
+            flex: 0 1 640px;
+
+            min-width: 250px;
+        }
+
+        .search-box {
+            height: 40px;
+
+            border: 1px solid #ccc;
+            border-right: none;
+
+            border-radius: 20px 0 0 20px;
+
+            flex: 1;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 16px;
+
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        .search-button {
+            width: 64px;
+            height: 40px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 0 20px 20px 0;
+
+            background: #f8f8f8;
+
+            position: relative;
+
+            cursor: pointer;
+        }
+
+        .search-button:hover {
+            background: #eeeeee;
+        }
+
+        .search-button::before {
+            content: "";
+
+            width: 13px;
+            height: 13px;
+
+            border: 2px solid #333;
+
+            border-radius: 50%;
+
+            position: absolute;
+
+            left: 23px;
+            top: 9px;
+        }
+
+        .search-button::after {
+            content: "";
+
+            width: 7px;
+            height: 2px;
+
+            background: #333;
+
+            position: absolute;
+
+            transform: rotate(45deg);
+
+            left: 36px;
+            top: 24px;
+        }
+
+
+        /* MICROPHONE */
+
+        .mic {
+            width: 40px;
+            height: 40px;
+
+            background: #f2f2f2;
+
+            border-radius: 50%;
+
+            margin-left: 12px;
+
+            position: relative;
+
+            flex-shrink: 0;
+
+            cursor: pointer;
+        }
+
+        .mic:hover {
+            background: #e5e5e5;
+        }
+
+        .mic::before {
+            content: "";
+
+            width: 7px;
+            height: 15px;
+
+            background: #333;
+
+            border-radius: 5px;
+
+            position: absolute;
+
+            top: 8px;
+            left: 16px;
+        }
+
+        .mic::after {
+            content: "";
+
+            width: 14px;
+            height: 10px;
+
+            border: 2px solid #333;
+            border-top: 0;
+
+            border-radius: 0 0 10px 10px;
+
+            position: absolute;
+
+            left: 13px;
+            top: 16px;
+        }
+
+
+        /* =========================
+           HEADER RIGHT
+        ========================= */
+
+        .header-right {
+            margin-left: auto;
+
+            display: flex;
+            align-items: center;
+
+            gap: 14px;
+
+            flex-shrink: 0;
+        }
+
+
+        /* CREATE */
+
+        .create {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            position: relative;
+
+            cursor: pointer;
+        }
+
+        .create:hover {
+            background: #f2f2f2;
+        }
+
+        .create::before {
+            content: "+";
+
+            font-size: 27px;
+
+            position: absolute;
+
+            left: 8px;
+            top: 4px;
+        }
+
+
+        /* =========================
+           BELL
+        ========================= */
+
+        .notification {
+            width: 40px;
+            height: 40px;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            cursor: pointer;
+
+            position: relative;
+        }
+
+        .notification:hover {
+            background: #f2f2f2;
+        }
+
+        .bell-icon {
+            width: 18px;
+            height: 18px;
+
+            position: relative;
+
+            display: block;
+        }
+
+        /* bell body */
+
+        .bell-icon::before {
+            content: "";
+
+            position: absolute;
+
+            width: 13px;
+            height: 14px;
+
+            left: 2px;
+            top: 1px;
+
+            border: 2px solid #222;
+
+            border-radius: 8px 8px 4px 4px;
+
+            background: transparent;
+        }
+
+        /* bell bottom */
+
+        .bell-icon::after {
+            content: "";
+
+            position: absolute;
+
+            width: 17px;
+            height: 2px;
+
+            background: #222;
+
+            left: 0;
+            bottom: 2px;
+
+            border-radius: 2px;
+        }
+
+        .notification .bell-dot {
+            position: absolute;
+
+            width: 5px;
+            height: 5px;
+
+            background: #222;
+
+            border-radius: 50%;
+
+            left: 17px;
+            top: 28px;
+        }
+
+
+        /* =========================
+           USER AVATAR
+        ========================= */
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+
+            border-radius: 50%;
+
+            background: #d6a06a;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
+        }
+
+        .avatar svg {
+            width: 21px;
+            height: 21px;
+        }
+
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            position: fixed;
+
+            top: 56px;
+            left: 0;
+            bottom: 0;
+
+            width: 218px;
+
+            height: calc(100vh - 56px);
+
+            background: #fff;
+
+            padding: 10px 12px;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            z-index: 900;
+        }
+
+        .side-item {
+            height: 40px;
+
+            display: flex;
+            align-items: center;
+
+            border-radius: 9px;
+
+            padding: 0 13px;
+
+            font-size: 12px;
+
+            color: #333;
+
+            margin-bottom: 2px;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+        }
+
+        .side-item:hover {
+            background: #f2f2f2;
+        }
+
+        .side-item.active {
+            background: #f2f2f2;
+            font-weight: 600;
+        }
+
+        .side-icon {
+            width: 25px;
+
+            margin-right: 13px;
+
+            font-size: 17px;
+
+            text-align: center;
+
+            flex-shrink: 0;
+        }
+
+        .side-title {
+            font-size: 13px;
+
+            font-weight: bold;
+
+            padding: 16px 13px 8px;
+        }
+
+        .divider {
+            height: 1px;
+
+            background: #e5e5e5;
+
+            margin: 10px 0;
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            margin-left: 218px;
+
+            padding-top: 56px;
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================
+           CATEGORY BAR
+        ========================= */
+
+        .category-bar {
+            height: 62px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            padding: 0 24px;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            white-space: nowrap;
+
+            background: #fff;
+
+            position: sticky;
+
+            top: 56px;
+
+            z-index: 100;
+        }
+
+        .category-bar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .category {
+            background: #f2f2f2;
+
+            padding: 8px 13px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            color: #222;
+
+            cursor: pointer;
+
+            flex-shrink: 0;
+        }
+
+        .category:hover {
+            background: #e5e5e5;
+        }
+
+        .category:first-child {
+            background: #111;
+            color: #fff;
+        }
+
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .content {
+            padding: 0 24px 40px;
+        }
+
+
+        /* =========================
+           FEATURED
+        ========================= */
+
+        .featured {
+            display: grid;
+
+            grid-template-columns: 2fr 1fr;
+
+            gap: 16px;
+
+            margin-bottom: 22px;
+        }
+
+        .featured-card {
+            height: 170px;
+
+            border-radius: 9px;
+
+            overflow: hidden;
+
+            position: relative;
+
+            background: #ddd;
+
+            cursor: pointer;
+        }
+
+        .featured-card img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition:
+                transform .35s ease,
+                filter .35s ease;
+        }
+
+
+        /* FEATURED HOVER */
+
+        .featured-card:hover img {
+            transform: scale(1.06);
+
+            filter: brightness(.78);
+        }
+
+        .featured-card::after {
+            content: "";
+
+            position: absolute;
+
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0);
+
+            transition: background .35s ease;
+
+            pointer-events: none;
+        }
+
+        .featured-card:hover::after {
+            background: rgba(0, 0, 0, .08);
+        }
+
+
+        .featured-label {
+            position: absolute;
+
+            left: 13px;
+            bottom: 12px;
+
+            color: #fff;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            text-shadow: 0 1px 4px #000;
+
+            z-index: 2;
+        }
+
+
+        /* =========================
+           VIDEO GRID
+        ========================= */
+
+        .video-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            column-gap: 15px;
+
+            row-gap: 26px;
+        }
+
+        .video {
+            min-width: 0;
+        }
+
+
+        /* =========================
+           THUMBNAIL
+        ========================= */
+
+        .thumbnail {
+            width: 100%;
+
+            aspect-ratio: 16 / 9;
+
+            background: #ddd;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            position: relative;
+
+            cursor: pointer;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+
+            transition:
+                transform .35s ease,
+                filter .35s ease;
+        }
+
+
+        /* IMAGE HOVER */
+
+        .thumbnail:hover img {
+            transform: scale(1.06);
+
+            filter: brightness(.78);
+        }
+
+
+        /* PLAY OVERLAY */
+
+        .thumbnail::after {
+            content: "▶";
+
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%)
+                scale(.7);
+
+            width: 48px;
+            height: 48px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: rgba(0, 0, 0, .75);
+
+            color: white;
+
+            font-size: 18px;
+
+            opacity: 0;
+
+            transition:
+                opacity .25s ease,
+                transform .25s ease;
+
+            pointer-events: none;
+        }
+
+        .thumbnail:hover::after {
+            opacity: 1;
+
+            transform:
+                translate(-50%, -50%)
+                scale(1);
+        }
+
+
+        /* =========================
+           DURATION
+        ========================= */
+
+        .duration {
+            position: absolute;
+
+            bottom: 5px;
+            right: 5px;
+
+            background: rgba(0, 0, 0, .8);
+
+            color: #fff;
+
+            padding: 2px 4px;
+
+            border-radius: 2px;
+
+            font-size: 10px;
+
+            z-index: 3;
+        }
+
+
+        /* =========================
+           VIDEO INFO
+        ========================= */
+
+        .video-info {
+            display: flex;
+
+            margin-top: 9px;
+        }
+
+
+        /* =========================
+           DEFAULT PROFILE ICON
+        ========================= */
+
+        .channel-avatar {
+            width: 30px;
+            height: 30px;
+
+            border-radius: 50%;
+
+            background: #e5e5e5;
+
+            flex-shrink: 0;
+
+            margin-right: 9px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            overflow: hidden;
+        }
+
+        .channel-avatar svg {
+            width: 19px;
+            height: 19px;
+
+            fill: #777;
+        }
+
+
+        .video-text {
+            min-width: 0;
+        }
+
+        .video-title {
+            font-size: 12px;
+
+            font-weight: 600;
+
+            line-height: 17px;
+
+            color: #0f0f0f;
+
+            display: -webkit-box;
+
+            -webkit-box-orient: vertical;
+
+            -webkit-line-clamp: 2;
+
+            overflow: hidden;
+        }
+
+        .channel-name,
+        .video-meta {
+            color: #606060;
+
+            font-size: 10px;
+
+            line-height: 16px;
+        }
+
+        .more {
+            margin-left: auto;
+
+            width: 20px;
+
+            color: #555;
+
+            font-size: 16px;
+
+            text-align: center;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 1100px) {
+
+            .search-area {
+                margin-left: 35px;
+            }
+
+            .video-grid {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+        }
+
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 75px;
+
+                padding: 10px 8px;
+            }
+
+            .side-item {
+                justify-content: center;
+
+                padding: 0;
+            }
+
+            .side-item span,
+            .side-title {
+                display: none;
+            }
+
+            .side-icon {
+                margin-right: 0;
+            }
+
+            .main {
+                margin-left: 75px;
+            }
+
+            .search-area {
+                margin-left: 20px;
+            }
+
+            .video-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .featured {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+        @media (max-width: 600px) {
+
+            .search-area {
+                flex: 1;
+
+                margin-left: 10px;
+            }
+
+            .create {
+                display: none;
+            }
+
+            .content {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .category-bar {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="header">
+
+
+        <!-- MENU -->
+
+        <div class="menu">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+
+
+        <!-- LOGO -->
+
+        <a class="logo" href="#">
+
+            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAACUCAMAAABC4vDmAAAAb1BMVEX/AAD/////4uL/eHj//Pz/9/f/5eX/8PD/Cgr/nJz/yMj/29v/8/P/enr/zc3/Wlr/jo7/rq7/qan/0tL/LS3/f3//dHT/ZGT/wMD/tbX/oaH/ior/k5P/SUn/Ozv/Njb/bW3/GBj/ICD/QkL/UFCKxe69AAAEVElEQVR4nO2b23aqMBBAEwUiVwVEQFAR/f9vPAGLRcQ2h5k0ecj2oZe12rUtaTIzmSFUQ4hqgTmMlChGShQjJYqREsVIiWKkRDFSohgpUYyUKEZKFFEpyw4Yc/zIK8oyTpKjW9dVlWVhGK7f4N/Msqqq3WOSxHFZFl7qO4zZFlQqYH4aRfGxrvLTpd0QJK772zas3biIOk9bXMopjuFhe2qxRD7Qnu95WJXpjNlEyndvkl3e2TTl6geptEF7Tv/Hfr36IOU0aoweZGxOyturdCLkkr5LHdUqdSRTqUS1UUfyKlWq9nlQjqUc1TYDzreUlauWGdhaT6lCtcs3xVPqolrlm8sgFak2GRN9SYWqRcaEDyl2Ui0y5sR6qVTRKTzPJu2lNNk4B8peKlOt8UrWS2m0IXTseynVFlM6KW3OvQGHS6WqJaZ4XEqLSGqMy6Vq1RJTKi51UC0xpeFS2sRSA7lF7K1qiSl3Rpy/T4l/4eKQ1fJ0z6+kHOXtivjLCxkO9WU8+6tPAHtnl/8XEoKxiABi4b4oERyveDoPPP5azFelhGHHPh4BpFfP8o2P+wxLAog7RzWl4oznRI7EXf7D40IXc/GWVk12OFKUrtCWVsVfSFI8LULatTICeH9TKUoTlHg/JIDI5V2K2juESndOAJHLjBRfWvD47E4AW8ysFF9ad6DUjQAilw9S1Iph28OFAJbmJ6luaUG09gRQPf8sxU8ewFptCeAt/SRFabR4aV3lSdFgaUa5IYCI9hepbmkt+u1ypfgzXHLygCJ/ASlKvT8uXgpJrf74byUgtSiekbymkkW74EbilkCLhRvzVZ6Us3hPv8o6ZhggzN7LOZBpDAlBLwSQG32U8mCVnJuEIA/cSnAigAxkVgqymL7YkgZVyooRUuUDborloWR+GWYyipDI9CBmyDZaD0iFVeCwC7x+K5fEKFJYZYSeGKVoxho0oY4Cobxoucidch64EGsV6DerEbRk7TdoLk9SSHF/RR0Zl+KtD7kGcZZFu7+xX0EujCQ1WdwcEkCrSejcA6JPQ9dAbhHaKHZ4o7uuhQdlyOy4lAYNnq8cuRTgnJGDp2tbiZYNOFR2N/x/0vZSWvUJErLupQCxpwySXkqrNs++0ZNL6dXDcXYezada9QU19CGlUT/zoyW9b2hGb3cAYA1SGv3/HekgZWvTPXxmTynqq5YZiOi3lC7xy46OpfToYczoqxQFlISwaKypFC1VRwvuU2U0ICall02Yi0fnpCj1lKVbp2Ts8Tp0aKU1ZiOUKIeC0c9SvZhf1uv89Ady7e3eZO5EaF6qx2ZOGnmlW4fbc4t7NF73pzyrkzKKfIfND9yKjfxadj/vW5RlP+27q75mfQ+Hpsnzbced03+S53lzODxGf7vB39pNkrgb+10xFnyap10i9dnWsmxOEASMwz90X4kPHMuRkoOREsVIiWKkRDFSohgpUYyUKEZKFCMlipESxUiJ8g8k9ki4QZMDSQAAAABJRU5ErkJggg==" alt="">
+
+            <h1>YouTube</h1>
+            <!-- <svg
+                class="youtube-logo"
+                viewBox="0 0 120 40"
+                xmlns="http://www.w3.org/2000/svg">
+
+                <rect
+                    x="1"
+                    y="6"
+                    width="48"
+                    height="28"
+                    rx="8"
+                    fill="#FF0000" />
+
+                <polygon
+                    points="20,13 20,27 34,20"
+                    fill="#FFFFFF" />
+
+                <text
+                    x="54"
+                    y="28"
+                    font-family="Arial"
+                    font-size="19"
+                    font-weight="700"
+                    fill="#0F0F0F">
+                    YouTube
+                </text>
+
+            </svg> -->
+
+        </a>
+
+
+        <!-- SEARCH -->
+
+        <div class="search-area">
+
+            <div class="search-box">
+                Search
+            </div>
+
+            <div class="search-button"></div>
+
+            <div class="mic"></div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="header-right">
+
+
+            <div class="create"></div>
+
+
+            <!-- BELL -->
+
+            <div class="notification">
+
+                <span class="bell-icon"></span>
+
+                <span class="bell-dot"></span>
+
+            </div>
+
+
+            <!-- USER -->
+
+            <div class="avatar">
+
+                <svg
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+
+                    <circle
+                        cx="12"
+                        cy="8"
+                        r="4"
+                        fill="#fff" />
+
+                    <path
+                        d="M4 21c0-4 3.5-7 8-7s8 3 8 7"
+                        fill="#fff" />
+
+                </svg>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================
+         SIDEBAR
+    ========================= -->
+
+    <aside class="sidebar">
+
+
+        <div class="side-item active">
+
+            <div class="side-icon">
+                ⌂
+            </div>
+
+            <span>
+                Home
+            </span>
+
+        </div>
+
+
+        <div class="side-item">
+
+            <div class="side-icon">
+                ▶
+            </div>
+
+            <span>
+                Shorts
+            </span>
+
+        </div>
+
+
+        <div class="side-item">
+
+            <div class="side-icon">
+                ▣
+            </div>
+
+            <span>
+                Subscriptions
+            </span>
+
+        </div>
+
+
+        <div class="divider"></div>
+
+
+        <div class="side-title">
+            You
+        </div>
+
+
+        <div class="side-item">
+
+            <div class="side-icon">
+                ◷
+            </div>
+
+            <span>
+                History
+            </span>
+
+        </div>
+
+
+        <div class="side-item">
+
+            <div class="side-icon">
+                ▣
+            </div>
+
+            <span>
+                Playlists
+            </span>
+
+        </div>
+
+
+        <div class="side-item">
+
+            <div class="side-icon">
+                ▶
+            </div>
+
+            <span>
+                Your videos
+            </span>
+
+        </div>
+
+
+        <div class="side-item">
+
+            <div class="side-icon">
+                ⏱
+            </div>
+
+            <span>
+                Watch later
+            </span>
+
+        </div>
+
+
+        <div class="divider"></div>
+
+
+        <div class="side-title">
+            Subscriptions
+        </div>
+
+
+        <div class="side-item">
+
+            <div class="channel-dot"></div>
+
+            <span>
+                Channel One
+            </span>
+
+        </div>
+
+
+        <div class="side-item">
+
+            <div class="channel-dot"></div>
+
+            <span>
+                Channel Two
+            </span>
+
+        </div>
+
+
+        <div class="side-item">
+
+            <div class="channel-dot"></div>
+
+            <span>
+                Channel Three
+            </span>
+
+        </div>
+
+
+        <div class="side-item">
+
+            <div class="channel-dot"></div>
+
+            <span>
+                Channel Four
+            </span>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =========================
+         MAIN
+    ========================= -->
+
+    <main class="main">
+
+
+        <!-- CATEGORY BAR -->
+
+        <nav class="category-bar">
+
+            <div class="category">
+                All
+            </div>
+
+            <div class="category">
+                Music
+            </div>
+
+            <div class="category">
+                Live
+            </div>
+
+            <div class="category">
+                Gaming
+            </div>
+
+            <div class="category">
+                News
+            </div>
+
+            <div class="category">
+                Mixes
+            </div>
+
+            <div class="category">
+                Programming
+            </div>
+
+            <div class="category">
+                React
+            </div>
+
+            <div class="category">
+                Comedy
+            </div>
+
+            <div class="category">
+                Recently uploaded
+            </div>
+
+        </nav>
+
+
+
+        <section class="content">
+
+
+            <!-- =========================
+                 FEATURED
+            ========================= -->
+
+            <div class="featured">
+
+
+                <div class="featured-card">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=80"
+                        alt="Featured video">
+
+                    <div class="featured-label">
+                        Featured video
+                    </div>
+
+                </div>
+
+
+                <div class="featured-card">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80"
+                        alt="Featured video">
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =========================
+                 VIDEO GRID
+            ========================= -->
+
+            <div class="video-grid">
+
+
+                <!-- VIDEO 1 -->
+
+                <article class="video">
+
+                    <div class="thumbnail">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=800&q=80"
+                            alt="Music">
+
+                        <span class="duration">
+                            10:42
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <div class="channel-avatar">
+
+                            <svg
+                                viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4" />
+
+                                <path
+                                    d="M4 21c0-4 3.5-7 8-7s8 3 8 7" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="video-text">
+
+                            <div class="video-title">
+                                Amazing video title that appears exactly like this
+                            </div>
+
+                            <div class="channel-name">
+                                Channel Name
+                            </div>
+
+                            <div class="video-meta">
+                                1.2M views • 2 days ago
+                            </div>
+
+                        </div>
+
+
+                        <div class="more">
+                            ⋮
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- VIDEO 2 -->
+
+                <article class="video">
+
+                    <div class="thumbnail">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80"
+                            alt="Learning">
+
+                        <span class="duration">
+                            8:21
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <div class="channel-avatar">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4" />
+
+                                <path
+                                    d="M4 21c0-4 3.5-7 8-7s8 3 8 7" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="video-text">
+
+                            <div class="video-title">
+                                Another interesting video from today
+                            </div>
+
+                            <div class="channel-name">
+                                Creator
+                            </div>
+
+                            <div class="video-meta">
+                                524K views • 1 day ago
+                            </div>
+
+                        </div>
+
+
+                        <div class="more">
+                            ⋮
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- VIDEO 3 -->
+
+                <article class="video">
+
+                    <div class="thumbnail">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80"
+                            alt="News">
+
+                        <span class="duration">
+                            15:03
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <div class="channel-avatar">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4" />
+
+                                <path
+                                    d="M4 21c0-4 3.5-7 8-7s8 3 8 7" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="video-text">
+
+                            <div class="video-title">
+                                Latest news and things happening around us
+                            </div>
+
+                            <div class="channel-name">
+                                News Channel
+                            </div>
+
+                            <div class="video-meta">
+                                890K views • 5 hours ago
+                            </div>
+
+                        </div>
+
+
+                        <div class="more">
+                            ⋮
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- VIDEO 4 -->
+
+                <article class="video">
+
+                    <div class="thumbnail">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=800&q=80"
+                            alt="Workspace">
+
+                        <span class="duration">
+                            6:18
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <div class="channel-avatar">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4" />
+
+                                <path
+                                    d="M4 21c0-4 3.5-7 8-7s8 3 8 7" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="video-text">
+
+                            <div class="video-title">
+                                A new video you might enjoy watching
+                            </div>
+
+                            <div class="channel-name">
+                                Creator Studio
+                            </div>
+
+                            <div class="video-meta">
+                                203K views • 3 days ago
+                            </div>
+
+                        </div>
+
+
+                        <div class="more">
+                            ⋮
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- VIDEO 5 -->
+
+                <article class="video">
+
+                    <div class="thumbnail">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1516321165247-4aa89a48be28?auto=format&fit=crop&w=800&q=80"
+                            alt="Technology">
+
+                        <span class="duration">
+                            12:44
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <div class="channel-avatar">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4" />
+
+                                <path
+                                    d="M4 21c0-4 3.5-7 8-7s8 3 8 7" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="video-text">
+
+                            <div class="video-title">
+                                Learn something new with this video
+                            </div>
+
+                            <div class="channel-name">
+                                Learning Channel
+                            </div>
+
+                            <div class="video-meta">
+                                312K views • 4 days ago
+                            </div>
+
+                        </div>
+
+
+                        <div class="more">
+                            ⋮
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- VIDEO 6 -->
+
+                <article class="video">
+
+                    <div class="thumbnail">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=800&q=80"
+                            alt="Programming">
+
+                        <span class="duration">
+                            9:37
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <div class="channel-avatar">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4" />
+
+                                <path
+                                    d="M4 21c0-4 3.5-7 8-7s8 3 8 7" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="video-text">
+
+                            <div class="video-title">
+                                React and web development tutorial
+                            </div>
+
+                            <div class="channel-name">
+                                Code Channel
+                            </div>
+
+                            <div class="video-meta">
+                                145K views • 1 week ago
+                            </div>
+
+                        </div>
+
+
+                        <div class="more">
+                            ⋮
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- VIDEO 7 -->
+
+                <article class="video">
+
+                    <div class="thumbnail">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&w=800&q=80"
+                            alt="Computer">
+
+                        <span class="duration">
+                            7:52
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <div class="channel-avatar">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4" />
+
+                                <path
+                                    d="M4 21c0-4 3.5-7 8-7s8 3 8 7" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="video-text">
+
+                            <div class="video-title">
+                                Daily video and latest updates
+                            </div>
+
+                            <div class="channel-name">
+                                Daily Channel
+                            </div>
+
+                            <div class="video-meta">
+                                76K views • 2 days ago
+                            </div>
+
+                        </div>
+
+
+                        <div class="more">
+                            ⋮
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+
+                <!-- VIDEO 8 -->
+
+                <article class="video">
+
+                    <div class="thumbnail">
+
+                        <img
+                            src="https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80"
+                            alt="Video production">
+
+                        <span class="duration">
+                            11:26
+                        </span>
+
+                    </div>
+
+
+                    <div class="video-info">
+
+                        <div class="channel-avatar">
+
+                            <svg viewBox="0 0 24 24">
+
+                                <circle
+                                    cx="12"
+                                    cy="8"
+                                    r="4" />
+
+                                <path
+                                    d="M4 21c0-4 3.5-7 8-7s8 3 8 7" />
+
+                            </svg>
+
+                        </div>
+
+
+                        <div class="video-text">
+
+                            <div class="video-title">
+                                Watch this amazing new upload
+                            </div>
+
+                            <div class="channel-name">
+                                Video Creator
+                            </div>
+
+                            <div class="video-meta">
+                                421K views • 6 days ago
+                            </div>
+
+                        </div>
+
+
+                        <div class="more">
+                            ⋮
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+</body>
+
+</html>
